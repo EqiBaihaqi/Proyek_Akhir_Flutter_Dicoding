@@ -1,3 +1,5 @@
+import 'package:codelab/main.dart';
+import 'package:codelab/main_screen.dart';
 import 'package:codelab/tourism_list/tourism_place.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +11,12 @@ class DetailScreen extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-            title: const Text(
-          'Wisata Bandung',
-          style: TextStyle(fontFamily: 'Baloo', fontSize: 40),
+            title: Container(
+          margin: const EdgeInsets.only(top: 15),
+          child: const Text(
+            'Wisata Bandung',
+            style: TextStyle(fontFamily: 'Baloo', fontSize: 40),
+          ),
         )),
         body: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
@@ -39,15 +44,24 @@ class MobileView extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MainScreen()));
+                  },
+                ),
+                const FavoriteButton(),
+              ],
             ),
-            const FavoriteButton(),
+
             Image.asset(place.imageAsset),
             // ignore: avoid_unnecessary_containers
             Container(
@@ -148,70 +162,92 @@ class WebView extends StatelessWidget {
                     height: 10,
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.asset(place.imageAsset),
+                      Image.asset(
+                        place.imageAsset,
+                        width: 750,
+                        height: 450,
+                        fit: BoxFit.cover,
+                      ),
                       const SizedBox(
                         width: 10,
                       ),
                       Expanded(
-                          child: Card(
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    place.name,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontFamily: 'Baloo',
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
+                        child: Column(
+                          children: [
+                            Card(
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          place.name,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                              fontFamily: 'Baloo',
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const FavoriteButton()
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.date_range),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(place.openDays)
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.lock_clock),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(place.openTime)
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.money),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(place.ticketPrice)
+                                          ],
+                                        ),
+                                        const SizedBox(height: 14),
+                                        Text(place.description)
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.date_range),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text(place.openDays)
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.lock_clock),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text(place.openTime)
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.money),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text(place.ticketPrice)
-                                    ],
-                                  ),
-                                  const SizedBox(height: 14),
-                                  Text(place.description)
-                                ],
-                              )
-                            ],
-                          ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.arrow_back),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const MyApp()));
+                              },
+                            ),
+                          ],
                         ),
-                      ))
+                      )
                     ],
                   ),
                   SizedBox(

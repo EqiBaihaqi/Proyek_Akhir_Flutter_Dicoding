@@ -9,8 +9,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('Wisata Bandung. Size: ${MediaQuery.of(context).size.width}'),
+        title: const Text('Wisata Bandung'),
       ),
       body: const TourismPlaceList(),
     );
